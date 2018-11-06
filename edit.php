@@ -17,8 +17,22 @@
  // 取得できた編集対象のデータを$feedに格納
  $feed = $stmt->fetch(PDO::FETCH_ASSOC);
 
- // 今データを格納した$feedを使って、画面に編集データを表示しましょう
- // ※foreachは今回は使いません
+ //更新処理（更新ボタンが押された時発動）
+ if (!empty($_POST)){
+    $sql = "UPDATE `feeds` SET `feed` = ? WHERE `feeds`.`id` = ?"; //変更したつぶやきをDBに上書き保存する
+
+    $data = array($_POST["feed"],$feed_id);
+
+    //SQL文の実行
+    $stmt = $dbh->prepare($sql);
+    $stmt->execute($data);
+
+    //タイムラインへ遷移
+    header("Location: timeline.php");
+    exit();
+
+ }
+
 
 ?>
 <!DOCTYPE html>
