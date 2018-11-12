@@ -53,8 +53,35 @@
       break;
     }
 
+    // いいね済みかどうかの確認
+    $like_flag_sql = "SELECT * FROM `likes` WHERE `user_id`=? AND `feed_id`=?";
+    $like_flag_data = [$signin_user['id'],$feed['id']];
+    $like_flag_stmt = $dbh->prepare($like_flag_sql);
+    $like_flag_stmt->execute($like_flag_data);
+
+    $is_liked = $like_flag_stmt->fetch(PDO::FETCH_ASSOC);
+
+    //三項演算子（if文の省略形。代入のみの場合に使える）
+    $feed['is_liked'] = $is_liked ? true:false;
+    //下のif文と全く一緒の処理
+    // if ($is_liked){ $feed['is_liked'] = true; }else{ $feed['is_liked'] = false; }
+
+    //$feed連想配列にlike数を格納するキーを用意し、数字を代入する
+    //代入するLike数を取得するSQL文の実行
+    $like_sql = 'SELECT COUNT(*) as `like_count` FROM `likes` WHERE `feed_id` = ?';
+    $like_data = array($feed['id']);
+    $like_stmt = $dbh->prepare($like_sql);
+    $like_stmt->execute($like_data);
+
+    $like_count_data = $like_stmt->fetch(PDO::FETCH_ASSOC);
+
+    $feed['like_count'] = $like_count_data['like_count'];
+
+    // v($feed,'$feed');
 
     $feeds[] = $feed; //[]は、配列の末尾にデータを追加するという意味
+
+
   }
 
   // v($feeds,'$feeds');

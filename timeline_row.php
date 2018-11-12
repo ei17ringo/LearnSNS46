@@ -21,7 +21,7 @@
                   <span>いいね!</span>
                 </button>
                 <span>いいね数 : </span>
-                <span class="like_count">100</span>
+                <span class="like_count"><?= $feed_each["like_count"]; ?></span>
 
                 <span class="comment_count">コメント数 : 9</span>
                 <?php if ($_SESSION['id'] == $feed_each["user_id"]) : ?>

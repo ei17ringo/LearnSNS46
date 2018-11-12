@@ -6,6 +6,9 @@ $(function() {
         var feed_id = $(this).siblings('.feed-id').text();
         var user_id = $('#signin-user').text();
 
+        var like_btn = $(this); //押されたボタンそのもの
+        var like_count = $(this).siblings('.like_count').text(); //クラス名like_countと指定されてるタグのテキスト
+
         console.log(feed_id);
         console.log(user_id);
 
@@ -23,6 +26,10 @@ $(function() {
         .done(function(data){
           //目的の処理が成功した時の処理
           console.log(data);
+          if (data == 'true'){
+            like_count++; //like_count+1と同じ意味
+            like_btn.siblings('.like_count').text(like_count); //プラス１した数字を上書き
+          }
         })
         .fail(function(err){
           //目的の処理が失敗した時の処理
