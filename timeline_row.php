@@ -15,7 +15,7 @@
             </div>
             <div class="row feed_sub">
               <div class="col-xs-12">
-                <span hidden ><?= $feed["id"] ?></span>
+                <span hidden class="feed-id" ><?= $feed_each["id"] ?></span>
                 <button class="btn btn-default btn-xs js-like">
                   <i class="fa fa-thumbs-up" aria-hidden="true"></i>
                   <span>いいね!</span>
