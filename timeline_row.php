@@ -16,10 +16,17 @@
             <div class="row feed_sub">
               <div class="col-xs-12">
                 <span hidden class="feed-id" ><?= $feed_each["id"] ?></span>
-                <button class="btn btn-default btn-xs js-like">
-                  <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                  <span>いいね!</span>
-                </button>
+                <?php if ($feed_each['is_liked']): ?>
+                  <button class="btn btn-default btn-xs js-unlike">
+                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                    <span>いいねを取り消す</span>
+                  </button>
+                <?php else: ?>
+                  <button class="btn btn-default btn-xs js-like">
+                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                    <span>いいね!</span>
+                  </button>
+                <?php endif; ?>
                 <span>いいね数 : </span>
                 <span class="like_count"><?= $feed_each["like_count"]; ?></span>
 
