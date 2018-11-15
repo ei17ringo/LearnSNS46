@@ -34,12 +34,20 @@
     }
   }
 
-  //一覧データの取得
-  // $sql = 'SELECT * FROM `feeds` ORDER BY `created` DESC'; //一覧データを取得するSELECT文を記述
-  $sql = 'SELECT `f`.*,`u`.`name`,`u`.`img_name` AS `profile_image` FROM `feeds` AS `f` INNER JOIN `users` AS `u` ON `f`.`user_id` = `u`.`id` ORDER BY `created` DESC';
-  // DESC 大きい数字から小さい数字にに並べる
-  // ASC 小さい数字から大きい数字に並べる
-  $data = array();
+  if (isset($_GET['search_word'])){
+    //検索ワードがあるとき
+    $sql = 'SELECT `f`.*,`u`.`name`,`u`.`img_name` AS `profile_image` FROM `feeds` AS `f` INNER JOIN `users` AS `u` ON `f`.`user_id` = `u`.`id` WHERE `f`.`feed` LIKE ? ORDER BY `created` DESC';
+    $search_word = "%".$_GET['search_word']."%";
+    $data = [$search_word];
+  }else{
+    //検索ワードがないとき
+    //一覧データの取得
+      $sql = 'SELECT `f`.*,`u`.`name`,`u`.`img_name` AS `profile_image` FROM `feeds` AS `f` INNER JOIN `users` AS `u` ON `f`.`user_id` = `u`.`id` ORDER BY `created` DESC';
+      // DESC 大きい数字から小さい数字にに並べる
+      // ASC 小さい数字から大きい数字に並べる
+      $data = [];
+  }
+
   $stmt = $dbh->prepare($sql);
   $stmt->execute($data);
 
